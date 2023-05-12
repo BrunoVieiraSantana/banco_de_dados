@@ -20,7 +20,7 @@ relacional.
 </span>
 
 <p align="center">
-</strong>Desenvolvedores:</strong><br />
+<strong>Desenvolvedores:</strong><br />
 João Victor Sena Miranda da Costa<br />
 Bruno Vieira Santana
   
