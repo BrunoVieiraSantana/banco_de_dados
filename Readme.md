@@ -31,7 +31,7 @@ Bruno Vieira Santana
 
 <strong>Bibliotecas necessárias</strong><br />
 pip install customtkinter<br />
-pip install re<br />
+pip install regex<br />
 pip install tkinter <br />
 pip install ttkwidgets<br />
 pip install CTkMessagebox<br />
