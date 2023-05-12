@@ -37,6 +37,7 @@ pip install ttkwidgets<br />
 pip install CTkMessagebox<br />
 pip install PIL<br />
 pip install matplotlib<br />
+pip install tksheet<br />
 
 
 
