@@ -29,22 +29,22 @@ Bruno Vieira Santana
 
 ## 💻 Instalação
 
-# Bibliotecas para interface gráfica
-import customtkinter
-import tkinter.ttk as ttk
-import tkinter
-import re
-from tkinter import *
-from ttkwidgets.autocomplete import AutocompleteEntry
-from CTkMessagebox import CTkMessagebox
+Bibliotecas para interface gráfica<br />
+import customtkinter<br />
+import tkinter.ttk as ttk<br />
+import tkinter<br />
+import re<br />
+from tkinter import *<br />
+from ttkwidgets.autocomplete import AutocompleteEntry<br />
+from CTkMessagebox import CTkMessagebox<br />
 
-# Bibliotecas para importação de imagens
-import os
-from PIL import Image
+Bibliotecas para importação de imagens<br />
+import os<br />
+from PIL import Image<br />
 
-# Bibliotecas para gráficos
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+Bibliotecas para gráficos<br />
+import matplotlib.pyplot as plt<br />
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg<br />
 
 
 
