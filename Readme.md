@@ -1,19 +1,28 @@
 
 <span align="center">
 
-##  Sistema de Gerenciamento de Trânsito 👋 
+##  Sistema de Gerenciamento de Trânsito 🚦 
 
 </span>
 
+<p align="center">
+  Aplicação de gerenciamento com integração à um banco de dados
+relacional.
+  
+</p>
 
 <div align="center">
 <img src="diagrama.jpg" width="700px" />
 </div>
 
 
+
+</span>
+
 <p align="center">
-  Aplicação de gerenciamento com integração à um banco de dados
-relacional.
+Desenvolvedores:
+João Victor Sena Miranda da Costa
+Bruno Vieira Santana
   
 </p>
 
