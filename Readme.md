@@ -29,7 +29,7 @@ Bruno Vieira Santana
 
 ## 💻 Instalação
 
-Bibliotecas para interface gráfica<br />
+<strong>Bibliotecas necessárias</strong><br />
 pip install customtkinter<br />
 pip install re<br />
 pip install tkinter <br />
