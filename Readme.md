@@ -2,7 +2,7 @@
 <span align="center">
 
 ##  Sistema de Gerenciamento de Trânsito 🚦 
-<br />  
+
 </span>
 
 <p align="center">
