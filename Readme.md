@@ -20,8 +20,8 @@ relacional.
 </span>
 
 <p align="center">
-Desenvolvedores:
-João Victor Sena Miranda da Costa
+Desenvolvedores:<br />
+João Victor Sena Miranda da Costa<br />
 Bruno Vieira Santana
   
 </p>
