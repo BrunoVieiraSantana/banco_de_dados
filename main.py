@@ -23,13 +23,34 @@ from database import *
 login=False
 id_final = 0
 
+# Temas
+#customtkinter.set_appearance_mode("system")
+customtkinter.set_appearance_mode("dark")
+#customtkinter.set_appearance_mode("light")
+
 # Mensagens de Erro
 def show_checkmark():
     CTkMessagebox(message="""Cadastro feito com sucesso.""",
                 icon="check", option_1="Continuar",cancel_button_color='transparent', title='')
+    
+def show_checkmark_update():
+    CTkMessagebox(message="""Atualização feita com sucesso.""",
+                icon="check", option_1="Continuar",cancel_button_color='transparent', title='')
+    
+def show_checkmark_delete():
+    CTkMessagebox(message="""Exclusão feita com sucesso.""",
+                icon="check", option_1="Continuar",cancel_button_color='transparent', title='')
 
 def show_error_empty():
     CTkMessagebox(title="Error", message="""    Algum campo está vazio
+          Tente novamente""", icon="cancel",cancel_button_color='transparent')
+
+def show_error_id_empty():
+    CTkMessagebox(message="""Selecione o item escolhido na tabela.""",
+                icon="info", option_1="Continuar",cancel_button_color='transparent', title='')
+
+def show_error_empty_new_user():
+    CTkMessagebox(title="Error", message="""    Algum campo "Obrigatório" está vazio
           Tente novamente""", icon="cancel",cancel_button_color='transparent')
     
 def show_error_login_fail():
@@ -38,7 +59,7 @@ def show_error_login_fail():
 
 def show_checkmark_excluir():
     CTkMessagebox(message="""Para Excluir, você precisa confirmar a exclusão.""",
-                icon="check", option_1="Continuar",cancel_button_color='transparent', title='')
+                icon="info", option_1="Continuar",cancel_button_color='transparent', title='')
 
 def show_error_len_cpf():
     CTkMessagebox(title="Error", message="""    O CPF deve possuir 11 digitos
@@ -47,6 +68,13 @@ def show_error_len_cpf():
 def show_error_len_cnh():
     CTkMessagebox(title="Error", message="""    O CNH deve possuir 11 digitos
       (Somente números)""", icon="cancel",cancel_button_color='transparent')
+    
+def show_error_len_placa():
+    CTkMessagebox(title="Error", message="""A Placa deve possuir 7 digitos""", icon="cancel",cancel_button_color='transparent')
+
+def show_error_len_chassi():
+    CTkMessagebox(title="Error", message="""O Chassi deve possuir 17 digitos""", icon="cancel",cancel_button_color='transparent')
+
 
 def show_error_str_cpf():
     CTkMessagebox(title="Error", message="""    O CNH deve possuir
@@ -55,6 +83,14 @@ def show_error_str_cpf():
 def show_error_str_cnh():
     CTkMessagebox(title="Error", message="""    O CNH deve possuir
       somente números""", icon="cancel",cancel_button_color='transparent')
+    
+def show_error_str_id_motorista():
+    CTkMessagebox(title="Error", message="""    O ID deve possuir
+      somente números""", icon="cancel",cancel_button_color='transparent')
+    
+def show_error_tipo():
+    CTkMessagebox(title="Error", message="""    O Tipo deve ser selecionado""", icon="cancel",cancel_button_color='transparent')
+
 #---
 def show_info():
     CTkMessagebox(title="Info", message="This is a CTkMessagebox!",cancel_button_color='transparent')
@@ -71,14 +107,15 @@ def show_warning():
         
 def ask_question():
     msg = CTkMessagebox(title="Sair?", message="Você quer fechar o programa?",
-                        icon="question", option_1="Cancel", option_2="No", option_3="Yes",cancel_button_color='transparent')
+                        icon="question", option_1="Cancelar", option_2="Não", option_3="Sim",cancel_button_color='transparent')
     response = msg.get()
     
-    if response=="Yes":
+    if response=="Sim":
         app.destroy()       
     else:
-        print("Click 'Yes' to exit!")
-#---
+        print("Click 'Sim' para sair!")
+
+# Funções auxiliares
 def check_int(valor):
     controle = False
     try:
@@ -87,6 +124,8 @@ def check_int(valor):
     except:
         controle = False
     return controle
+
+
 
 class App(customtkinter.CTk):
     def __init__(self):
@@ -163,8 +202,6 @@ Trânsito""", image=self.logo_image, compound="left", font=customtkinter.CTkFont
 
 
         # Home
-        # self.home_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        # self.home_frame.grid_columnconfigure(0, weight=1)
         self.home_frame = customtkinter.CTkLabel(self, text= "", image=self.bg_image)
         self.home_frame.grid(row=0, column=0,)
         self.login_frame = customtkinter.CTkFrame(self.home_frame, corner_radius=0)
@@ -200,6 +237,12 @@ Trânsito""", image=self.logo_image, compound="left", font=customtkinter.CTkFont
         self.second_frame.tab("Multas").grid_columnconfigure(0, weight=1)
 
         columns = ('id', 'nome', 'cpf', 'cnh')
+
+        # ttk.Style().theme_use("default")
+        # ttk.Style().configure("Treeview",background="#2a2d2e",foreground="white",rowheight=25,fieldbackground="#343638",bordercolor="#343638",borderwidth=0)
+        # ttk.Style().map('Treeview', background=[('selected', '#22559b')])
+        # ttk.Style().configure("Treeview.Heading", background="#565b5e", foreground="white", relief="flat")
+        # ttk.Style().map("Treeview.Heading", background=[('active', '#3484F0')])
 
         self.table_motorista = ttk.Treeview(master=self.second_frame.tab("Motoristas"),
                                 columns=columns,
@@ -301,6 +344,14 @@ Trânsito""", image=self.logo_image, compound="left", font=customtkinter.CTkFont
         self.third_frame_label_search_motorista.grid(row=1, column=0, padx=30, pady=(15, 15))
 
         self.third_frame_entry_search_motorista = AutocompleteEntry(autocompleteList, self.third_frame.tab("Motoristas"), matchesFunction=matches)
+        # self.third_frame_entry_search_motorista.configure(background="#565b5e", foreground="white")
+        self.third_frame_entry_search_motorista.insert(0, "Pesquisa por Nome")
+        self.third_frame_entry_search_motorista.configure(state=DISABLED)
+        def on_click(event):
+            self.third_frame_entry_search_motorista.configure(state=NORMAL)
+            self.third_frame_entry_search_motorista.delete(0, END)
+            self.third_frame_entry_search_motorista.unbind('<Button-1>', on_click_id)
+        on_click_id = self.third_frame_entry_search_motorista.bind('<Button-1>', on_click)
         self.third_frame_entry_search_motorista.grid(row=2, column=0, columnspan=1, padx=(10, 0), pady=(10, 10), sticky="nsew")
         self.third_frame_button_search_motorista = customtkinter.CTkButton(self.third_frame.tab("Motoristas") , fg_color="transparent",command=self.button_search_motorista , border_width=2,text="Buscar", text_color=("gray10", "#DCE4EE"))
         self.third_frame_button_search_motorista.grid(row=3, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
@@ -1145,14 +1196,28 @@ que deseja remover""",
         name = self.fifth_frame_entry_name_update_motorista.get()
         cpf = self.fifth_frame_entry_cpf_update_motorista.get()
         cnh = self.fifth_frame_entry_cnh_update_motorista.get()
-        updateMotorista(con,id_final, name, cpf, cnh)
 
-        for item in self.table_motorista.get_children():
-            self.table_motorista.delete(item)
+        if id_final == 0:
+            show_error_id_empty()
+            
+        elif len(cpf) < 11 or len(cpf) > 11:
+            show_error_len_cpf()
 
-        motoristas = verMotorista(con)
-        for motorista in motoristas:
-            self.table_motorista.insert('', tkinter.END, values=motorista)
+        elif len(cnh) < 11 or len(cnh) > 11:
+            show_error_len_cnh()
+        
+        elif len(name) == 0 or  len(cpf) == 0 or  len(cnh) == 0:
+            show_error_empty_new_user()
+        else:           
+            updateMotorista(con,id_final, name, cpf, cnh)
+            show_checkmark_update()
+
+            for item in self.table_motorista.get_children():
+                self.table_motorista.delete(item)
+
+            motoristas = verMotorista(con)
+            for motorista in motoristas:
+                self.table_motorista.insert('', tkinter.END, values=motorista)
 
 #Botão remover motorista
     def button_delete_motorista(self):
@@ -1167,8 +1232,9 @@ que deseja remover""",
             motoristas = verMotorista(con)
             for motorista in motoristas:
                 self.table_motorista.insert('', tkinter.END, values=motorista)
+            show_checkmark_delete()
         else:
-            show_checkmark_excluir()
+            show_error_id_empty()
 
 
     def main_button_add_motorista(self):
@@ -1195,14 +1261,35 @@ que deseja remover""",
         chassi = self.fifth_frame_entry_chassi_add_veiculo.get()
         id_motorista = self.fifth_frame_entry_id_motorista_add_veiculo.get()
         tipo = self.fifth_frame_variable_add_veiculo.get()
-        inserirAutomovel(con, placa, chassi, tipo, id_motorista)
 
-        for item in self.table_veiculos.get_children():
-            self.table_veiculos.delete(item)
+        if len(placa) == 0 or len(chassi) == 0 or len(id_motorista) == 0 or len(tipo) == 0:
+            show_error_empty()
 
-        veiculos = vertodasTabelasVeiculos(con)
-        for veiculo in veiculos:
-            self.table_veiculos.insert('', tkinter.END, values=veiculo)
+        elif check_int(id_motorista) == False:
+            show_error_str_id_motorista()
+
+
+        elif len(placa)<7 or len(placa) > 7:
+            show_error_len_placa()
+
+        elif len(chassi)<17 or len(chassi) > 17:
+            show_error_len_chassi()
+
+        elif tipo == "Escolha o tipo":
+            show_error_tipo()
+
+        
+        else:
+            inserirAutomovel(con, placa, chassi, tipo, id_motorista)
+
+            for item in self.table_veiculos.get_children():
+                self.table_veiculos.delete(item)
+
+            veiculos = vertodasTabelasVeiculos(con)
+            for veiculo in veiculos:
+                self.table_veiculos.insert('', tkinter.END, values=veiculo)
+            
+            show_checkmark()
         
         
 
@@ -1213,14 +1300,33 @@ que deseja remover""",
         chassi = self.fifth_frame_entry_chassi_update_veiculo.get()
         id_motorista = self.fifth_frame_entry_id_motorista_update_veiculo.get()
         tipo = self.fifth_frame_variable_update_veiculo.get()
-        updateAutomovel(con, id_final, placa, chassi, tipo, id_motorista)
 
-        for item in self.table_veiculos.get_children():
-            self.table_veiculos.delete(item)
+        if len(placa) == 0 or len(chassi) == 0 or len(id_motorista) == 0 or len(tipo) == 0:
+            show_error_empty()
 
-        veiculos = vertodasTabelasVeiculos(con)
-        for veiculo in veiculos:
-            self.table_veiculos.insert('', tkinter.END, values=veiculo)
+        elif check_int(id_motorista) == False:
+            show_error_str_id_motorista()
+
+
+        elif len(placa)<7 or len(placa) > 7:
+            show_error_len_placa()
+
+        elif len(chassi)<17 or len(chassi) > 17:
+            show_error_len_chassi()
+
+        elif tipo == "Escolha o tipo":
+            show_error_tipo()
+
+        else:
+            updateAutomovel(con, id_final, placa, chassi, tipo, id_motorista)
+
+            for item in self.table_veiculos.get_children():
+                self.table_veiculos.delete(item)
+
+            veiculos = vertodasTabelasVeiculos(con)
+            for veiculo in veiculos:
+                self.table_veiculos.insert('', tkinter.END, values=veiculo)
+            show_checkmark_update()
 
     def  button_search_veiculo_update(self):
         resultados = buscarAutomovel(con,self.fifth_frame_entry_update_veiculo.get())
@@ -1232,15 +1338,20 @@ que deseja remover""",
 
 
     def button_delete_veiculo(self):
-        global id_final
-        deletarAutomovel(con,id_final)
+        check_var = self.fifth_frame_checkbox_delete_veiculo.get()
+        if check_var == 1:
+            global id_final
+            deletarAutomovel(con,id_final)
 
-        for item in self.table_veiculos.get_children():
-            self.table_veiculos.delete(item)
+            for item in self.table_veiculos.get_children():
+                self.table_veiculos.delete(item)
 
-        veiculos = vertodasTabelasVeiculos(con)
-        for veiculo in veiculos:
-            self.table_veiculos.insert('', tkinter.END, values=veiculo)
+            veiculos = vertodasTabelasVeiculos(con)
+            for veiculo in veiculos:
+                self.table_veiculos.insert('', tkinter.END, values=veiculo)
+            show_checkmark_delete()
+        else:
+            show_error_id_empty()
 
 
     def  button_search_veiculo_delete(self):
@@ -1250,11 +1361,6 @@ que deseja remover""",
 
         for veiculo in resultados:
             self.fifth_frame_table_search_delete_veiculo.insert('', tkinter.END, values=veiculo)
-
-
-
-   
-
 
 
 #---------------------------------------------------------------------------------
@@ -1300,6 +1406,7 @@ que deseja remover""",
         motorista = self.fifth_frame_entry_id_motorista_update_multa.get()
         automovel = self.fifth_frame_entry_id_veiculo_update_multa.get()
         updateMulta(con,id_final,valor,data,motorista,automovel)
+        show_checkmark_update()
 
         for item in self.table_multas.get_children():
             self.table_multas.delete(item)
@@ -1317,15 +1424,17 @@ que deseja remover""",
             self.fifth_frame_table_search_update_multa.insert('', tkinter.END, values=veiculo)
 
     def button_delete_multa(self):
-        global id_final
-        deletarMulta(con,id_final)
+        check_var = self.fifth_frame_checkbox_delete_multa.get()
+        if check_var == 1:
+            global id_final
+            deletarMulta(con,id_final)
 
-        for item in self.table_multas.get_children():
-            self.table_multas.delete(item)
+            for item in self.table_multas.get_children():
+                self.table_multas.delete(item)
 
-        multas = vertodasTabelas(con)
-        for multa in multas:
-            self.table_multas.insert('', tkinter.END, values=multa)
+            multas = vertodasTabelas(con)
+            for multa in multas:
+                self.table_multas.insert('', tkinter.END, values=multa)
 
 
     def  button_search_multa_delete(self):
@@ -1338,7 +1447,8 @@ que deseja remover""",
 
 # Login fuctions
     def button_login_user_bind(self, event):
-        self.button_login_user()
+        self.login_event()
+        #self.button_login_user()
 
     def button_login_user(self):
         login = self.home_frame_username_entry.get()
@@ -1365,8 +1475,11 @@ que deseja remover""",
         senha = self.seventh_frame_entry_senha.get()
         data_nascimento = self.seventh_frame_entry_data.get()
         email = self.seventh_frame_entry_email.get()
-
-        inserirLogin(con,login,senha,data_nascimento,email)
+        if len(login) == 0 or len(senha) == 0 or len(email) == 0:
+            show_error_empty_new_user()
+        else:
+            inserirLogin(con,login,senha,data_nascimento,email)
+            show_checkmark()
 
     def button_update_user(self):
         login = self.seventh_frame_entry_login.get()
@@ -1375,6 +1488,7 @@ que deseja remover""",
         email = self.seventh_frame_entry_email.get()
 
         updateLogin(con,login,senha,data_nascimento,email)
+        show_checkmark_update()
 
     def buton_forgot_pass(self):
         self.eighth_frame_entry_resultado.delete(0, END)
@@ -1429,7 +1543,6 @@ class AutocompleteEntry(Entry):
             del kwargs['listboxLength']
         else:
             self.listboxLength = 8
-
 
         if 'matchesFunction' in kwargs:
             self.matchesFunction = kwargs['matchesFunction']
