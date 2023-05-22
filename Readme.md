@@ -13,7 +13,7 @@ relacional.
 
 
 <p align="center">
-(https://projetoninho.my.canva.site/#inicio)
+https://projetoninho.my.canva.site/#inicio
   
 </p>
 
