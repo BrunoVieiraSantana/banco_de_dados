@@ -24,7 +24,6 @@ relacional.
 
 <p align="center">
 <strong>Desenvolvedores:</strong><br />
-Emanuel Cristian Marques da Silva<br />
 João Victor Sena Miranda da Costa<br />
 Bruno Vieira Santana
   
